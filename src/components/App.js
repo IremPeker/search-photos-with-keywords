@@ -12,7 +12,8 @@ class App extends React.Component {
     console.log(`10)PROPS INSIDE APP.JS`, props);
 
     this.state = {
-      photos: [],
+      randomPhotos: [],
+      searchPhotos: [],
       value: "",
       showRandomButton: false,
       error: false,
@@ -27,15 +28,7 @@ class App extends React.Component {
 
     let url = "";
     const accessKey = `${process.env.REACT_APP_API_KEY}`;
-    // const secretKey =
-    //   "f85c89a68d39a21e4d45f5f7354c137ce392aabab4d7acf95b3aeb7d2802c714";
     let show = false;
-    // const unsplash = new Unsplash({
-    //   accessKey: accessKey,
-    //   headers: {
-    //     "X-Per-Page": "30"
-    //   }
-    // });
 
     if (value) {
       show = true;
@@ -64,20 +57,19 @@ class App extends React.Component {
         console.log(`3) inside if allphotos.length > 0=>`);
 
         this.setState({
-          photos: [...allPhotos, ...this.state.photos],
-          value: value,
+          randomPhotos: [...allPhotos, ...this.state.randomPhotos],
           showRandomButton: show,
           error: false
         });
         console.log(
-          `inside allPhotos.length>0, this.state.photos=>`,
-          this.state.photos,
+          `inside allPhotos.length>0, this.state.randomPhotos=>`,
+          this.state.randomPhotos,
           `allPhotos=>`,
           allPhotos
         );
       } else {
         this.setState({
-          photos: [...searchPhotos, ...this.state.photos],
+          searchPhotos: [...searchPhotos, ...this.state.searchPhotos],
           value: value,
           showRandomButton: show,
           error: false
@@ -85,38 +77,10 @@ class App extends React.Component {
         console.log(
           `4) inside value`,
           searchPhotos,
-          `this.state.photos=>`,
-          this.state.photos // this.state.photos holds the old value here
+          `this.state.searchPhotos=>`,
+          this.state.searchPhotos
         );
       }
-      // else (searchPhotos.length === 10) {
-      //   this.setState((prevState, searchPhotos) => {
-      //     return {
-      //       photos: [...prevState.photos, ...searchPhotos]
-      //     };
-      //   });
-
-      //   console.log(
-      //     `4) inside searchphotos=>`,
-      //     `prevState.photos is=>`,
-      //     `searchPhotos is=>`,
-      //     searchPhotos,
-      //     `allPhotos=>`,
-      //     allPhotos,
-      //     `this.state.photos=>`,
-      //     this.state.photos
-      //   );
-      // }
-      // else {
-      //   console.log(`5) inside else`);
-
-      //   this.setState({
-      //     photos: [],
-      //     showRandomButton: show,
-      //     error: true
-      //   });
-      //   // console.log(`5) this.state.photos=>`, this.state.photos); // if there is no value
-      // }
     } catch (error) {
       this.setState({ error: true });
     }
@@ -159,7 +123,8 @@ class App extends React.Component {
           <ErrorContainer></ErrorContainer>
         ) : (
           <PhotoContainer
-            photos={this.state.photos}
+            randomPhotos={this.state.randomPhotos}
+            searchPhotos={this.state.searchPhotos}
             value={this.state.value}
             loadMore={this.loadMorePages}
           ></PhotoContainer>
@@ -171,6 +136,4 @@ class App extends React.Component {
 
 export default App;
 
-// check with the one in your drive
-//https://www.robinwieruch.de/react-paginated-list
-// figure out why it doesnt go to the next page on click
+// ADD ERROR MESSAGE
