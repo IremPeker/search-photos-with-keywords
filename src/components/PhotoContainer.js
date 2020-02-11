@@ -25,8 +25,24 @@ class PhotoContainer extends React.Component {
 
   render() {
     const breakpointColumnsObj = this.state.breakpointColumnsObj;
-    const photos = this.props.photos;
-    const all = photos.map(el => {
+    const random = this.props.randomPhotos;
+    const value = this.props.value;
+    const all = random.map(el => {
+      return (
+        <div className="img" key={el.id}>
+          <p>Photo by {el.user.name}</p>
+          <img
+            className="photo-img"
+            loader={<LoaderContainer></LoaderContainer>}
+            src={el.urls.small}
+            title={el.description}
+            alt={el.alt_description}
+          />
+        </div>
+      );
+    });
+    const searched = this.props.searchPhotos;
+    const search = searched.map(el => {
       return (
         <div className="img" key={el.id}>
           <p>Photo by {el.user.name}</p>
@@ -47,14 +63,14 @@ class PhotoContainer extends React.Component {
           className="my-masonry-grid"
           columnClassName="my-masonry-grid_column"
         >
-          {all}
+          {value ? search : all}
         </Masonry>
         <button
           type="button"
           onClick={this.props.loadMore}
           className="load-more-btn"
         >
-          Next Page
+          Load More
         </button>
         ;
       </div>
