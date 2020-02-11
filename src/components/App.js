@@ -58,46 +58,65 @@ class App extends React.Component {
       const allPhotos = await response.json();
       const searchPhotos = allPhotos.results;
 
-      if (allPhotos.length > 0) {
+      console.log(`ALLPHOTOS=>`, allPhotos, `SEARCHPHOTOS`, searchPhotos);
+
+      if (!value) {
         console.log(`3) inside if allphotos.length > 0=>`);
 
         this.setState({
-          photos: allPhotos,
+          photos: [...allPhotos, ...this.state.photos],
           value: value,
           showRandomButton: show,
           error: false
         });
-        console.log(`allPhotos.length>0=>`, this.state.photos); // if there is no value
-        // } else if (allPhotos.length > 10) {
-        //   console.log(`9) inside if allphotos.length > 10=>`);
-
-        //   this.setState({
-        //     photos: this.state.photos,
-        //     showRandomButton: show,
-        //     error: false
-        //   });
-        //   console.log(`allPhotos.length>0=>`, this.state.photos); // if there is no value
-      } else if (value) {
-        console.log(`4) inside value & searchphotos.lenght>0=>`);
-
+        console.log(
+          `inside allPhotos.length>0, this.state.photos=>`,
+          this.state.photos,
+          `allPhotos=>`,
+          allPhotos
+        );
+      } else {
         this.setState({
-          photos: searchPhotos,
+          photos: [...searchPhotos, ...this.state.photos],
           value: value,
           showRandomButton: show,
-          error: false,
-          page: this.state.page + 1
+          error: false
         });
-        console.log(`4) this.state.photos=>`, this.state.photos); // if there is no value
-      } else {
-        console.log(`5) inside else`);
-
-        this.setState({
-          photos: [],
-          showRandomButton: show,
-          error: true
-        });
-        console.log(`5) this.state.photos=>`, this.state.photos); // if there is no value
+        console.log(
+          `4) inside value`,
+          searchPhotos,
+          `this.state.photos=>`,
+          this.state.photos // this.state.photos holds the old value here
+        );
       }
+      // else (searchPhotos.length === 10) {
+      //   this.setState((prevState, searchPhotos) => {
+      //     return {
+      //       photos: [...prevState.photos, ...searchPhotos]
+      //     };
+      //   });
+
+      //   console.log(
+      //     `4) inside searchphotos=>`,
+      //     `prevState.photos is=>`,
+      //     `searchPhotos is=>`,
+      //     searchPhotos,
+      //     `allPhotos=>`,
+      //     allPhotos,
+      //     `this.state.photos=>`,
+      //     this.state.photos
+      //   );
+      // }
+      // else {
+      //   console.log(`5) inside else`);
+
+      //   this.setState({
+      //     photos: [],
+      //     showRandomButton: show,
+      //     error: true
+      //   });
+      //   // console.log(`5) this.state.photos=>`, this.state.photos); // if there is no value
+      // }
     } catch (error) {
       this.setState({ error: true });
     }
@@ -109,8 +128,13 @@ class App extends React.Component {
   }
 
   loadMorePages = () => {
-    console.log(`7) loadMorePages onclick...`);
-    this.fetchData();
+    let searchValue = this.state.value;
+    console.log(`7) loadMorePages onclick...searchValue=>`, searchValue);
+    if (searchValue) {
+      this.fetchData(searchValue);
+    } else {
+      this.fetchData();
+    }
   };
 
   render() {

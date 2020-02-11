@@ -26,7 +26,7 @@ class PhotoContainer extends React.Component {
   render() {
     const breakpointColumnsObj = this.state.breakpointColumnsObj;
     const photos = this.props.photos;
-    const randomPhotos = photos.map(el => {
+    const all = photos.map(el => {
       return (
         <div className="img" key={el.id}>
           <p>Photo by {el.user.name}</p>
@@ -47,7 +47,7 @@ class PhotoContainer extends React.Component {
           className="my-masonry-grid"
           columnClassName="my-masonry-grid_column"
         >
-          {randomPhotos}
+          {all}
         </Masonry>
         <button
           type="button"
