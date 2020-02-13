@@ -5,95 +5,81 @@ import SearchContainer from "./SearchContainer";
 import PhotoContainer from "./PhotoContainer";
 import ErrorContainer from "./ErrorContainer";
 import photos from "unsplash-js/lib/methods/photos";
+import UrlErrorContainer from "./UrlErrorContainer";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    console.log(`10)PROPS INSIDE APP.JS`, props);
-
     this.state = {
       randomPhotos: [],
       searchPhotos: [],
       value: "",
       showRandomButton: false,
-      error: false,
+      searchError: false,
+      urlError: false,
       page: 1
     };
     this.fetchData = this.fetchData.bind(this);
     this.loadMorePages = this.loadMorePages.bind(this);
+    this.backToRandom = this.backToRandom.bind(this);
+    this.getTheValue = this.getTheValue.bind(this);
   }
 
   async fetchData(value) {
-    console.log(`1) fetchdata starts...`);
-
     let url = "";
     const accessKey = `${process.env.REACT_APP_API_KEY}`;
     let show = false;
 
     if (value) {
       show = true;
+      url = `https://api.unsplash.com/search/photos?client_id=${accessKey}&page=${this.state.page}&per_page=14&query=${value}`;
       this.setState({ page: this.state.page + 1 });
-      url = `https://api.unsplash.com/search/photos?client_id=${accessKey}&page=${this.state.page}&per_page=10&query=${value}`;
     } else {
       show = false;
       this.setState({ page: this.state.page + 1 });
-      url = `https://api.unsplash.com/photos?client_id=${accessKey}&page=${this.state.page}&per_page=10`;
+      url = `https://api.unsplash.com/photos?client_id=${accessKey}&page=${this.state.page}&per_page=14`;
     }
 
-    console.log(`2) url is=>`, url);
     try {
       const response = await fetch(url, {
-        method: "get",
-        headers: {
-          "X-Per-Page": 30
-        }
+        method: "get"
       });
       const allPhotos = await response.json();
       const searchPhotos = allPhotos.results;
 
-      console.log(`ALLPHOTOS=>`, allPhotos, `SEARCHPHOTOS`, searchPhotos);
-
-      if (!value) {
-        console.log(`3) inside if allphotos.length > 0=>`);
-
+      if (allPhotos.length > 0) {
         this.setState({
           randomPhotos: [...allPhotos, ...this.state.randomPhotos],
+          value: value,
           showRandomButton: show,
-          error: false
+          searchError: false
         });
-        console.log(
-          `inside allPhotos.length>0, this.state.randomPhotos=>`,
-          this.state.randomPhotos,
-          `allPhotos=>`,
-          allPhotos
-        );
-      } else {
+      } else if (searchPhotos.length > 0) {
         this.setState({
           searchPhotos: [...searchPhotos, ...this.state.searchPhotos],
           value: value,
           showRandomButton: show,
-          error: false
+          searchError: false
         });
-        console.log(
-          `4) inside value`,
-          searchPhotos,
-          `this.state.searchPhotos=>`,
-          this.state.searchPhotos
-        );
+      } else {
+        this.setState({
+          showRandomButton: show,
+          searchError: true
+        });
       }
     } catch (error) {
-      this.setState({ error: true });
+      this.setState({
+        urlError: true
+      });
     }
   }
 
   componentDidMount() {
-    console.log(`6) componentDidMount...`);
     this.fetchData();
   }
 
   loadMorePages = () => {
     let searchValue = this.state.value;
-    console.log(`7) loadMorePages onclick...searchValue=>`, searchValue);
     if (searchValue) {
       this.fetchData(searchValue);
     } else {
@@ -101,26 +87,40 @@ class App extends React.Component {
     }
   };
 
+  backToRandom = () => {
+    this.setState({
+      value: ""
+    });
+    this.fetchData();
+  };
+
+  getTheValue = value => {
+    this.setState({
+      randomPhotos: [],
+      searchPhotos: []
+    });
+    this.fetchData(value);
+  };
+
   render() {
-    console.log(`8) render...`);
     return (
       <div className="app">
-        <SearchContainer handleSearch={this.fetchData}></SearchContainer>
+        <SearchContainer
+          handleSearch={this.getTheValue}
+          page={this.state.page}
+        ></SearchContainer>
         {this.state.showRandomButton && (
           <div>
-            <button
-              className="randomBtn"
-              onClick={() => {
-                this.fetchData();
-              }}
-            >
+            <button className="randomBtn" onClick={this.backToRandom}>
               Back To Random Photos
             </button>
           </div>
         )}
 
-        {this.state.error ? (
+        {this.state.searchError ? (
           <ErrorContainer></ErrorContainer>
+        ) : this.state.urlError ? (
+          <UrlErrorContainer></UrlErrorContainer>
         ) : (
           <PhotoContainer
             randomPhotos={this.state.randomPhotos}
@@ -135,5 +135,3 @@ class App extends React.Component {
 }
 
 export default App;
-
-// ADD ERROR MESSAGE

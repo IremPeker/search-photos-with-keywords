@@ -4,8 +4,8 @@ const ErrorContainer = () => {
   return (
     <div>
       <p className="errorMsg">
-        No image has been found related to your search :( You can try again with
-        another keyword, or go back to Trending Giphies!
+        No image has been found with this keyword :( You can try again with
+        another keyword, or go back to Random Photos!
       </p>
     </div>
   );

@@ -4,12 +4,9 @@ import { DebounceInput } from "react-debounce-input";
 class SearchContainer extends React.Component {
   constructor(props) {
     super(props);
-    console.log(`PROPS INSIDE SEARCHCONTAINER`, props);
-
     this.state = {
       value: "",
       warning: false,
-      typing: false,
       page: 1
     };
     this.handleChange = this.handleChange.bind(this);
@@ -20,20 +17,15 @@ class SearchContainer extends React.Component {
     this.setState({
       value: e.target.value,
       warning: false,
-      typing: true
+      page: 1
     });
-    console.log(`VALUE inside SearchContainer handleChange`, this.state.value);
   }
 
   handleSubmit(e) {
     e.preventDefault();
     if (this.state.value.length > 2) {
       this.props.handleSearch(this.state.value);
-      console.log(
-        `VALUE inside SearchContainer handleSubmit`,
-        this.state.value
-      );
-      //this.setState({ value: "" });
+      this.setState({ value: "" });
     } else {
       this.setState({ warning: true });
     }
