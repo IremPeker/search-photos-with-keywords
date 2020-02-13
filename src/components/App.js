@@ -49,14 +49,14 @@ class App extends React.Component {
 
       if (allPhotos.length > 0) {
         this.setState({
-          randomPhotos: [...allPhotos, ...this.state.randomPhotos],
+          randomPhotos: [...this.state.randomPhotos, ...allPhotos],
           value: value,
           showRandomButton: show,
           searchError: false
         });
       } else if (searchPhotos.length > 0) {
         this.setState({
-          searchPhotos: [...searchPhotos, ...this.state.searchPhotos],
+          searchPhotos: [...this.state.searchPhotos, ...searchPhotos],
           value: value,
           showRandomButton: show,
           searchError: false
