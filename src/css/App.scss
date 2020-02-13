@@ -76,30 +76,29 @@ html,
   }
   .my-masonry-grid {
     width: 100%;
-    margin-bottom: 30px;
-    display: -webkit-box; /* Not needed if autoprefixing */
-    display: -ms-flexbox; /* Not needed if autoprefixing */
+    padding-left: 10px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    margin-left: -30px; /* gutter size offset */
+    margin: 10px 0 0 30px;
     margin: auto;
 
     .my-masonry-grid_column {
-      padding-left: 30px; /* gutter size */
+      width: 20%;
+      padding: 20px 10px;
       background-clip: padding-box;
 
       .img {
+        width: 150px;
+        .photo-owner {
+          width: 90px;
+        }
         .photo-img {
-          margin: 0 8px 8px 0; /* Some gutter */
+          width: 300px;
+          margin: 0 8px 8px 0;
           border-radius: 15px;
         }
       }
-    }
-
-    .loader {
-      width: 20px;
-      height: 20px;
-      background-color: white;
-      animation: rotate 0.7s linear infinite;
     }
   }
 
@@ -122,10 +121,23 @@ html,
   .errorMsg {
     padding: 25px;
   }
+
+  .fail {
+    height: 250px;
+    padding-left: 25px;
+  }
 }
 
-@keyframes rotate {
-  to {
-    transform: rotate(360deg);
+/*****************MASONRY RESPONSIVE********************************/
+
+@media (max-width: 800px) {
+  .my-masonry-grid {
+    margin-left: -15px; /* gutter size offset */
+  }
+  .my-masonry-grid_column {
+    padding-left: 15px; /* gutter size offset */
+  }
+  .my-masonry-grid_column > div {
+    margin-bottom: 15px; /* space between items */
   }
 }
