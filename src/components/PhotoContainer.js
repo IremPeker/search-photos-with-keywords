@@ -57,11 +57,7 @@ class PhotoContainer extends React.Component {
         >
           {value ? search : all}
         </Masonry>
-        <button
-          type="button"
-          onClick={this.props.loadMore}
-          className="load-more-btn"
-        >
+        <button type="button" onClick={this.props.loadMore} className="moreBtn">
           Load More
         </button>
       </div>

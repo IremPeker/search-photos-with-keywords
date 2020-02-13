@@ -6,6 +6,8 @@ $loadingBgOne: #4b4949;
 $loadingBgTwo: #575454;
 $loadingBgThree: #615e5e;
 $loadingBgFour: #534848;
+$buttonHover: rgba(255, 255, 0, 0.459);
+$buttonTransform: translateY(2px);
 
 * {
   box-sizing: border-box;
@@ -53,11 +55,17 @@ html,
         border-radius: 50px;
         padding: 10px 20px;
         width: 100px;
+        cursor: pointer;
+        outline: none;
         background: $buttonBg;
         color: $textColor;
-        &:focus {
-          outline: none;
-        }
+      }
+      .searchBtn:hover {
+        background-color: $buttonHover;
+      }
+      .searchBtn:active {
+        box-shadow: 0 5px #666;
+        transform: $buttonTransform;
       }
     }
   }
@@ -65,14 +73,20 @@ html,
     border: 0px;
     font-size: 15px;
     border-radius: 50px;
+    cursor: pointer;
+    outline: none;
     padding: 5px 10px;
     width: 135px;
     margin: 10px;
     background: $buttonBg;
     color: $textColor;
-    &:focus {
-      outline: none;
-    }
+  }
+  .randomBtn:hover {
+    background-color: $buttonHover;
+  }
+  .randomBtn:active {
+    box-shadow: 0 5px #666;
+    transform: $buttonTransform;
   }
   .my-masonry-grid {
     width: 100%;
@@ -102,7 +116,7 @@ html,
     }
   }
 
-  .load-more-btn {
+  .moreBtn {
     display: block;
     border-radius: 20px;
     margin: 1em auto;
@@ -113,10 +127,14 @@ html,
     font-weight: 500;
     text-transform: uppercase;
     cursor: pointer;
-
-    &:focus {
-      outline: 1px solid rgba(255, 255, 255, 0.5);
-    }
+    outline: none;
+  }
+  .moreBtn:hover {
+    background-color: $buttonHover;
+  }
+  .moreBtn:active {
+    box-shadow: 0 5px #666;
+    transform: $buttonTransform;
   }
   .errorMsg {
     padding: 25px;
