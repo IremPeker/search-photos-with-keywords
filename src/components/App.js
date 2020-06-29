@@ -1,11 +1,12 @@
 import React from "react";
 import "../css/App.scss";
-import Unsplash from "unsplash-js";
+//import Unsplash from "unsplash-js";
 import SearchContainer from "./SearchContainer";
 import PhotoContainer from "./PhotoContainer";
 import ErrorContainer from "./ErrorContainer";
-import photos from "unsplash-js/lib/methods/photos";
+//import photos from "unsplash-js/lib/methods/photos";
 import UrlErrorContainer from "./UrlErrorContainer";
+import LoaderContainer from "./LoaderContainer";
 
 class App extends React.Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class App extends React.Component {
       randomPhotos: [],
       searchPhotos: [],
       value: "",
+      loading: false,
       showRandomButton: false,
       searchError: false,
       urlError: false,
@@ -33,10 +35,10 @@ class App extends React.Component {
     if (value) {
       show = true;
       url = `https://api.unsplash.com/search/photos?client_id=${accessKey}&page=${this.state.page}&per_page=14&query=${value}`;
-      this.setState({ page: this.state.page + 1 });
+      this.setState({ page: this.state.page + 1, loading:true });
     } else {
       show = false;
-      this.setState({ page: this.state.page + 1 });
+      this.setState({ page: this.state.page + 1, loading:true });
       url = `https://api.unsplash.com/photos?client_id=${accessKey}&page=${this.state.page}&per_page=14`;
     }
 
@@ -52,19 +54,22 @@ class App extends React.Component {
           randomPhotos: [...this.state.randomPhotos, ...allPhotos],
           value: value,
           showRandomButton: show,
-          searchError: false
+          searchError: false,
+          loading: false
         });
       } else if (searchPhotos.length > 0) {
         this.setState({
           searchPhotos: [...this.state.searchPhotos, ...searchPhotos],
           value: value,
           showRandomButton: show,
-          searchError: false
+          searchError: false,
+          loading: false
         });
       } else {
         this.setState({
           showRandomButton: show,
-          searchError: true
+          searchError: true,
+          loading: false
         });
       }
     } catch (error) {
@@ -121,6 +126,8 @@ class App extends React.Component {
           <ErrorContainer></ErrorContainer>
         ) : this.state.urlError ? (
           <UrlErrorContainer></UrlErrorContainer>
+        ) : this.state.loading ? (
+          <LoaderContainer></LoaderContainer>
         ) : (
           <PhotoContainer
             randomPhotos={this.state.randomPhotos}
