@@ -8,7 +8,10 @@ class PhotoContainer extends React.Component {
       value: "",
       breakpointColumnsObj: {
         default: 4,
-        800: 2
+        1200: 3,
+        1000: 2,
+        800: 1,
+        600: 1
       }
     };
   }
@@ -57,9 +60,11 @@ class PhotoContainer extends React.Component {
         >
           {value ? search : all}
         </Masonry>
-        <button type="button" onClick={this.props.loadMore} className="moreBtn">
-          Load More
-        </button>
+        <div className="load-more-button-wrapper">
+          <button type="button" onClick={this.props.loadMore} className="load-more-button">
+            Load More
+          </button>
+        </div>
       </div>
     );
   }

@@ -15,7 +15,6 @@ class App extends React.Component {
       randomPhotos: [],
       searchPhotos: [],
       value: "",
-      loading: false,
       showRandomButton: false,
       searchError: false,
       urlError: false,
@@ -35,10 +34,10 @@ class App extends React.Component {
     if (value) {
       show = true;
       url = `https://api.unsplash.com/search/photos?client_id=${accessKey}&page=${this.state.page}&per_page=14&query=${value}`;
-      this.setState({ page: this.state.page + 1, loading:true });
+      this.setState({ page: this.state.page + 1 });
     } else {
       show = false;
-      this.setState({ page: this.state.page + 1, loading:true });
+      this.setState({ page: this.state.page + 1 });
       url = `https://api.unsplash.com/photos?client_id=${accessKey}&page=${this.state.page}&per_page=14`;
     }
 
@@ -54,22 +53,19 @@ class App extends React.Component {
           randomPhotos: [...this.state.randomPhotos, ...allPhotos],
           value: value,
           showRandomButton: show,
-          searchError: false,
-          loading: false
+          searchError: false
         });
       } else if (searchPhotos.length > 0) {
         this.setState({
           searchPhotos: [...this.state.searchPhotos, ...searchPhotos],
           value: value,
           showRandomButton: show,
-          searchError: false,
-          loading: false
+          searchError: false
         });
       } else {
         this.setState({
           showRandomButton: show,
-          searchError: true,
-          loading: false
+          searchError: true
         });
       }
     } catch (error) {
@@ -116,7 +112,7 @@ class App extends React.Component {
         ></SearchContainer>
         {this.state.showRandomButton && (
           <div>
-            <button className="randomBtn" onClick={this.backToRandom}>
+            <button className="random-button" onClick={this.backToRandom}>
               Back To Random Photos
             </button>
           </div>
@@ -126,8 +122,6 @@ class App extends React.Component {
           <ErrorContainer></ErrorContainer>
         ) : this.state.urlError ? (
           <UrlErrorContainer></UrlErrorContainer>
-        ) : this.state.loading ? (
-          <LoaderContainer></LoaderContainer>
         ) : (
           <PhotoContainer
             randomPhotos={this.state.randomPhotos}
