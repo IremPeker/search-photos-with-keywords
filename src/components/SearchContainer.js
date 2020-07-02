@@ -1,5 +1,6 @@
 import React from "react";
 import { DebounceInput } from "react-debounce-input";
+import LoaderContainer from "./LoaderContainer";
 
 class SearchContainer extends React.Component {
   constructor(props) {
@@ -7,7 +8,8 @@ class SearchContainer extends React.Component {
     this.state = {
       value: "",
       warning: false,
-      page: 1
+      page: 1,
+      loading: true
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -17,7 +19,8 @@ class SearchContainer extends React.Component {
     this.setState({
       value: e.target.value,
       warning: false,
-      page: 1
+      page: 1,
+      loading: false
     });
   }
 
@@ -25,7 +28,7 @@ class SearchContainer extends React.Component {
     e.preventDefault();
     if (this.state.value.length > 2) {
       this.props.handleSearch(this.state.value);
-      this.setState({ value: "" });
+      this.setState({ value: "", loading: true });
     } else {
       this.setState({ warning: true });
     }
@@ -44,8 +47,11 @@ class SearchContainer extends React.Component {
               value={this.state.value}
             />
           </label>
-          <input className="searchBtn" type="submit" value="Search" />
+          <input className="search-button" type="submit" value="Search" />
         </form>
+        {this.state.loading && (
+          <LoaderContainer></LoaderContainer>
+          )}
         {this.state.warning && (
           <small>Keyword must be at least 3 characters!</small>
         )}
