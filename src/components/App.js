@@ -18,7 +18,7 @@ class App extends React.Component {
       showRandomButton: false,
       searchError: false,
       urlError: false,
-      page: 1
+      page: 1,
     };
     this.fetchData = this.fetchData.bind(this);
     this.loadMorePages = this.loadMorePages.bind(this);
@@ -29,6 +29,7 @@ class App extends React.Component {
   async fetchData(value) {
     let url = "";
     const accessKey = `${process.env.REACT_APP_API_KEY}`;
+
     let show = false;
 
     if (value) {
@@ -43,7 +44,7 @@ class App extends React.Component {
 
     try {
       const response = await fetch(url, {
-        method: "get"
+        method: "get",
       });
       const allPhotos = await response.json();
       const searchPhotos = allPhotos.results;
@@ -53,24 +54,24 @@ class App extends React.Component {
           randomPhotos: [...this.state.randomPhotos, ...allPhotos],
           value: value,
           showRandomButton: show,
-          searchError: false
+          searchError: false,
         });
       } else if (searchPhotos.length > 0) {
         this.setState({
           searchPhotos: [...this.state.searchPhotos, ...searchPhotos],
           value: value,
           showRandomButton: show,
-          searchError: false
+          searchError: false,
         });
       } else {
         this.setState({
           showRandomButton: show,
-          searchError: true
+          searchError: true,
         });
       }
     } catch (error) {
       this.setState({
-        urlError: true
+        urlError: true,
       });
     }
   }
@@ -90,15 +91,15 @@ class App extends React.Component {
 
   backToRandom = () => {
     this.setState({
-      value: ""
+      value: "",
     });
     this.fetchData();
   };
 
-  getTheValue = value => {
+  getTheValue = (value) => {
     this.setState({
       randomPhotos: [],
-      searchPhotos: []
+      searchPhotos: [],
     });
     this.fetchData(value);
   };
@@ -108,8 +109,7 @@ class App extends React.Component {
       <div className="app">
         <SearchContainer
           handleSearch={this.getTheValue}
-          page={this.state.page}
-        ></SearchContainer>
+          page={this.state.page}></SearchContainer>
         {this.state.showRandomButton && (
           <div>
             <button className="random-button" onClick={this.backToRandom}>
@@ -127,8 +127,7 @@ class App extends React.Component {
             randomPhotos={this.state.randomPhotos}
             searchPhotos={this.state.searchPhotos}
             value={this.state.value}
-            loadMore={this.loadMorePages}
-          ></PhotoContainer>
+            loadMore={this.loadMorePages}></PhotoContainer>
         )}
       </div>
     );
