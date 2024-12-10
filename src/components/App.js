@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../css/App.scss";
+import { fetchData } from "../utils/dataUtils";
 //import Unsplash from "unsplash-js";
 import SearchContainer from "./SearchContainer";
 import PhotoContainer from "./PhotoContainer";
@@ -8,130 +9,120 @@ import ErrorContainer from "./ErrorContainer";
 import UrlErrorContainer from "./UrlErrorContainer";
 import LoaderContainer from "./LoaderContainer";
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      randomPhotos: [],
-      searchPhotos: [],
-      value: "",
-      showRandomButton: false,
-      searchError: false,
-      urlError: false,
-      page: 1,
-    };
-    this.fetchData = this.fetchData.bind(this);
-    this.loadMorePages = this.loadMorePages.bind(this);
-    this.backToRandom = this.backToRandom.bind(this);
-    this.getTheValue = this.getTheValue.bind(this);
-  }
+const App = () => {
+  const [photos, setPhotos] = useState([]);
+  const [searchPhotos, setSearchPhotos] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
+  const [showRandomButton, setShowRandomButton] = useState(false);
+  const [searchError, setSearchError] = useState(false);
+  const [urlError, setUrlError] = useState(false);
+  const [page, setPage] = useState(1);
 
-  async fetchData(value) {
-    let url = "";
-    const accessKey = `${process.env.REACT_APP_API_KEY}`;
-
-    let show = false;
-
-    if (value) {
-      show = true;
-      url = `https://api.unsplash.com/search/photos?client_id=${accessKey}&page=${this.state.page}&per_page=14&query=${value}`;
-      this.setState({ page: this.state.page + 1 });
-    } else {
-      show = false;
-      this.setState({ page: this.state.page + 1 });
-      url = `https://api.unsplash.com/photos?client_id=${accessKey}&page=${this.state.page}&per_page=14`;
+  useEffect(() => {
+    if (!photos.length) {
+      fetchData(page, searchValue);
     }
+  }, []);
 
-    try {
-      const response = await fetch(url, {
-        method: "get",
-      });
-      const allPhotos = await response.json();
-      const searchPhotos = allPhotos.results;
+  // async fetchData(value) {
+  //   let url = "";
+  //   const accessKey = `${process.env.REACT_APP_API_KEY}`;
 
-      if (allPhotos.length > 0) {
-        this.setState({
-          randomPhotos: [...this.state.randomPhotos, ...allPhotos],
-          value: value,
-          showRandomButton: show,
-          searchError: false,
-        });
-      } else if (searchPhotos.length > 0) {
-        this.setState({
-          searchPhotos: [...this.state.searchPhotos, ...searchPhotos],
-          value: value,
-          showRandomButton: show,
-          searchError: false,
-        });
-      } else {
-        this.setState({
-          showRandomButton: show,
-          searchError: true,
-        });
-      }
-    } catch (error) {
-      this.setState({
-        urlError: true,
-      });
-    }
-  }
+  //   let show = false;
 
-  componentDidMount() {
-    this.fetchData();
-  }
+  //   if (value) {
+  //     show = true;
+  //     url = `https://api.unsplash.com/search/photos?client_id=${accessKey}&page=${this.state.page}&per_page=14&query=${value}`;
+  //     this.setState({ page: this.state.page + 1 });
+  //   } else {
+  //     show = false;
+  //     this.setState({ page: this.state.page + 1 });
+  //     url = `https://api.unsplash.com/photos?client_id=${accessKey}&page=${this.state.page}&per_page=14`;
+  //   }
 
-  loadMorePages = () => {
-    let searchValue = this.state.value;
+  //   try {
+  //     const response = await fetch(url, {
+  //       method: "get",
+  //     });
+  //     const allPhotos = await response.json();
+  //     const searchPhotos = allPhotos.results;
+
+  //     if (allPhotos.length > 0) {
+  //       this.setState({
+  //         randomPhotos: [...this.state.randomPhotos, ...allPhotos],
+  //         value: value,
+  //         showRandomButton: show,
+  //         searchError: false,
+  //       });
+  //     } else if (searchPhotos.length > 0) {
+  //       this.setState({
+  //         searchPhotos: [...this.state.searchPhotos, ...searchPhotos],
+  //         value: value,
+  //         showRandomButton: show,
+  //         searchError: false,
+  //       });
+  //     } else {
+  //       this.setState({
+  //         showRandomButton: show,
+  //         searchError: true,
+  //       });
+  //     }
+  //   } catch (error) {
+  //     this.setState({
+  //       urlError: true,
+  //     });
+  //   }
+  // }
+
+  const loadMorePages = () => {
     if (searchValue) {
-      this.fetchData(searchValue);
+      //this.fetchData(searchValue);
     } else {
-      this.fetchData();
+      //this.fetchData();
     }
   };
 
-  backToRandom = () => {
-    this.setState({
-      value: "",
-    });
-    this.fetchData();
+  const backToRandom = () => {
+    // this.setState({
+    //   value: "",
+    // });
+    // this.fetchData();
   };
 
-  getTheValue = (value) => {
-    this.setState({
-      randomPhotos: [],
-      searchPhotos: [],
-    });
-    this.fetchData(value);
+  const getTheValue = (value) => {
+    // this.setState({
+    //   randomPhotos: [],
+    //   searchPhotos: [],
+    // });
+    // this.fetchData(value);
   };
 
-  render() {
-    return (
-      <div className="app">
-        <SearchContainer
-          handleSearch={this.getTheValue}
-          page={this.state.page}></SearchContainer>
-        {this.state.showRandomButton && (
-          <div>
-            <button className="random-button" onClick={this.backToRandom}>
-              Back To Random Photos
-            </button>
-          </div>
-        )}
+  return (
+    <div className="app">
+      <SearchContainer
+        // handleSearch={this.getTheValue}
+        page={page}></SearchContainer>
+      {showRandomButton && (
+        <div>
+          <button className="random-button" onClick={backToRandom}>
+            Back To Random Photos
+          </button>
+        </div>
+      )}
 
-        {this.state.searchError ? (
-          <ErrorContainer></ErrorContainer>
-        ) : this.state.urlError ? (
-          <UrlErrorContainer></UrlErrorContainer>
-        ) : (
-          <PhotoContainer
-            randomPhotos={this.state.randomPhotos}
-            searchPhotos={this.state.searchPhotos}
-            value={this.state.value}
-            loadMore={this.loadMorePages}></PhotoContainer>
-        )}
-      </div>
-    );
-  }
-}
+      {searchError ? (
+        <ErrorContainer />
+      ) : urlError ? (
+        <UrlErrorContainer />
+      ) : (
+        <PhotoContainer
+          randomPhotos={photos}
+          searchPhotos={searchPhotos}
+          value={searchValue}
+          loadMore={loadMorePages}></PhotoContainer>
+      )}
+    </div>
+  );
+};
 
 export default App;
