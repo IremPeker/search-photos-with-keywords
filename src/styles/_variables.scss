@@ -1,0 +1,25 @@
+$mainBg: #3f3f3f;
+$buttonBg: black;
+$textColor: white;
+$searchHeight: 100px;
+$loadingBgOne: #4b4949;
+$loadingBgTwo: #575454;
+$loadingBgThree: #615e5e;
+$loadingBgFour: #534848;
+$buttonHover: rgba(255, 255, 0, 0.459);
+$buttonTransform: translateY(2px);
+$breakpoint-tablet: 800px;
+
+:export {
+  $mainBg: $mainBg;
+  $buttonBg: $buttonBg;
+  $textColor: $textColor;
+  $searchHeight: $searchHeight;
+  $loadingBgOne: $loadingBgOne;
+  $loadingBgTwo: $loadingBgTwo;
+  $loadingBgThree: $loadingBgThree;
+  $loadingBgFour: $loadingBgFour;
+  $buttonHover: $buttonHover;
+  $buttonTransform: $buttonTransform;
+  $breakpoint-tablet: $breakpoint-tablet;
+}

@@ -1,5 +1,4 @@
-@import "../styles/Styles.scss";
-
+@use "./_variables.scss";
 .pagination-controls {
   margin-top: 20px;
   display: flex;

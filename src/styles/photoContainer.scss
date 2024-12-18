@@ -1,0 +1,48 @@
+@use "./_variables.scss" as vars;
+
+.my-masonry-grid {
+  width: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: column;
+  margin-left: -30px; /* gutter size offset */
+
+  @media (min-width: vars.$breakpoint-tablet) {
+    flex-direction: row;
+  }
+
+  @media (max-width: vars.$breakpoint-tablet) {
+    margin-left: -15px;
+  }
+
+  .my-masonry-grid_column {
+    padding-left: 30px; /* gutter size */
+    background-clip: padding-box;
+
+    @media (max-width: vars.$breakpoint-tablet) {
+      padding-left: -15px;
+    }
+    .img {
+      //width: 300px;
+      //   .photo-owner {
+      //     width: 90px;
+      //   }
+      .photo-img {
+        width: 300px;
+        //width: 300px;
+        //margin: 0 8px 8px 0;
+        border-radius: 15px;
+      }
+    }
+  }
+
+  .my-masonry-grid_column > div {
+    /* change div to reference your elements you put in <Masonry> */
+    margin: 0 0 30px 15px;
+
+    @media (max-width: vars.$breakpoint-tablet) {
+      margin-bottom: 15px;
+    }
+  }
+}

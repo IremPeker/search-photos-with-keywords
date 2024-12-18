@@ -18,29 +18,32 @@ const App = () => {
   const [perPage, setPerPage] = useState(20);
 
   useEffect(() => {
-    const loadPhotos = async () => {
-      const fetchedPhotos = await fetchData(
-        page,
-        perPage,
-        searchValue,
-        setUrlError
-      );
-      setPhotos(fetchedPhotos);
-    };
-    // if (!photos.length) {
-    //   fetchData(page, perPage, searchValue)
-    //     .then((data) => {
-    //       setPhotos(data);
-    //     })
-    //     .catch((error) => {
-    //       setUrlError(true);
-    //     });
-    // }
+    // const loadPhotos = async () => {
+    //   const fetchedPhotos = await fetchData(
+    //     page,
+    //     perPage,
+    //     searchValue,
+    //     setUrlError
+    //   );
+    //   setPhotos(fetchedPhotos);
+    // };
+
+    fetchData(page, perPage, searchValue)
+      .then((data) => {
+        if (data.length === 0) {
+          setSearchError(true);
+        } else {
+          setPhotos(data);
+        }
+      })
+      .catch((error) => {
+        setUrlError(true);
+      });
 
     // if (!photos.length) {
     //   loadPhotos();
     // }
-    loadPhotos();
+    //loadPhotos();
     // if (searchValue) {
     //   console.log("inside use effect, search value is: ", searchValue);
     // }
@@ -51,7 +54,7 @@ const App = () => {
     setPage((prevPage) => Math.max(prevPage - 1, 1));
 
   return (
-    <div className="app">
+    <div className="App">
       <SearchContainer
         setSearchValue={setSearchValue}
         setPhotos={setPhotos}
@@ -59,7 +62,9 @@ const App = () => {
         page={page}></SearchContainer>
       {searchValue && (
         <div>
-          <button className="random-button" onClick={() => setSearchValue("")}>
+          <button
+            className="app__random-button"
+            onClick={() => setSearchValue("")}>
             Back To Random Photos
           </button>
         </div>

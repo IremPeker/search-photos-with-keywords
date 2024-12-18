@@ -19,18 +19,21 @@ const SearchContainer = (props) => {
   };
 
   return (
-    <div className="search-container">
-      <div className="photo-search-form">
-        <label htmlFor="search-input" className="input-keyword"></label>
+    <div className="search">
+      <div className="search__input-and-button-wrapper">
+        <label htmlFor="search-input"></label>
         <input
           id="search-input"
+          className="search__input-and-button-wrapper__search-input"
           type="text"
           minLength={2}
           onChange={handleChange}
           value={searchValue}
         />
 
-        <button className="search-button" onClick={handleSubmit}>
+        <button
+          className="search__input-and-button-wrapper__search-button"
+          onClick={handleSubmit}>
           Search
         </button>
       </div>

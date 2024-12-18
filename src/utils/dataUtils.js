@@ -1,4 +1,4 @@
-export const fetchData = async (page, perPage, value, setUrlError) => {
+export const fetchData = async (page, perPage, value) => {
   console.log("I WILL START FETCHING THE DATA VALUE IS", value);
 
   const accessKey = `${process.env.REACT_APP_API_KEY}`;
@@ -20,6 +20,5 @@ export const fetchData = async (page, perPage, value, setUrlError) => {
     return photos;
   } catch (error) {
     console.error("Error during fetch:", error);
-    setUrlError(true);
   }
 };
