@@ -9,6 +9,7 @@ $loadingBgFour: #534848;
 $buttonHover: rgba(255, 255, 0, 0.459);
 $buttonTransform: translateY(2px);
 $breakpointTablet: 800px;
+$breakpointMobile: 600px;
 
 :export {
   $mainBg: $mainBg;
@@ -22,4 +23,5 @@ $breakpointTablet: 800px;
   $buttonHover: $buttonHover;
   $buttonTransform: $buttonTransform;
   $breakpointTablet: $breakpointTablet;
+  $breakpointMobile: $breakpointMobile;
 }
