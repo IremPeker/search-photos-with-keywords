@@ -1,20 +1,32 @@
 import React from "react";
 import Masonry from "react-masonry-css";
 
-const PhotoContainer = ({ allPhotos }) => {
+const PhotoContainer = ({ allPhotos, userName, setUserName }) => {
   const breakpointColumnsObj = {
     default: 3,
-    1100: 2,
-    700: 1,
+    1100: 3,
+    768: 2,
+    500: 1,
   };
 
   const photos = allPhotos?.map((el) => (
-    <div className="img" key={el.id}>
-      <p>Photo by {el.user.name}</p>
+    <div className="photo-wrapper" key={el.id}>
+      <p className="photo-wrapper__photo-credit">
+        Photo by{" "}
+        <a
+          className="photo-wrapper__photo-credit__username"
+          onClick={() => setUserName(el.user.username)}
+          title="Click if you want to see more photos from this user">
+          {el.user.username}
+        </a>
+      </p>
+      <p className="photo-wrapper__photo-description">
+        {el.description ?? el.alt_description}
+      </p>
       <img
-        className="photo-img"
+        className="photo-wrapper__photo-img"
         src={el.urls.small}
-        title={el.description}
+        title={el.description ?? el.alt_description}
         alt={el.alt_description}
       />
     </div>

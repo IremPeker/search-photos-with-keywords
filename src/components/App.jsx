@@ -15,20 +15,13 @@ const App = () => {
   const [searchError, setSearchError] = useState(false);
   const [urlError, setUrlError] = useState(false);
   const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(20);
+  const [userName, setUserName] = useState(null);
+  const perPage = 20;
 
   useEffect(() => {
-    // const loadPhotos = async () => {
-    //   const fetchedPhotos = await fetchData(
-    //     page,
-    //     perPage,
-    //     searchValue,
-    //     setUrlError
-    //   );
-    //   setPhotos(fetchedPhotos);
-    // };
+    console.log("inside use effect, user name is changed");
 
-    fetchData(page, perPage, searchValue)
+    fetchData(page, perPage, searchValue, userName)
       .then((data) => {
         if (data.length === 0) {
           setSearchError(true);
@@ -39,19 +32,17 @@ const App = () => {
       .catch((error) => {
         setUrlError(true);
       });
-
-    // if (!photos.length) {
-    //   loadPhotos();
-    // }
-    //loadPhotos();
-    // if (searchValue) {
-    //   console.log("inside use effect, search value is: ", searchValue);
-    // }
-  }, [photos?.length, page, perPage, searchValue, urlError]);
+  }, [photos?.length, page, perPage, searchValue, urlError, userName]);
 
   const handleNextPage = () => setPage((prevPage) => prevPage + 1);
   const handlePreviousPage = () =>
     setPage((prevPage) => Math.max(prevPage - 1, 1));
+
+  // const handleUserClick = async (username) => {
+  //   const userPhotos = await fetchUserPhotos(page, perPage, searchValue, username);
+  //   setPhotos(userPhotos);
+  //   //setSelectedUser(username);
+  // };
 
   return (
     <div className="App">
@@ -59,23 +50,20 @@ const App = () => {
         setSearchValue={setSearchValue}
         setPhotos={setPhotos}
         searchValue={searchValue}
+        userName={userName}
+        setUserName={setUserName}
         page={page}></SearchContainer>
-      {searchValue && (
-        <div>
-          <button
-            className="app__random-button"
-            onClick={() => setSearchValue("")}>
-            Back To Random Photos
-          </button>
-        </div>
-      )}
 
       {searchError ? (
         <ErrorContainer />
       ) : urlError ? (
         <UrlErrorContainer />
       ) : (
-        <PhotoContainer allPhotos={photos} value={searchValue}></PhotoContainer>
+        <PhotoContainer
+          allPhotos={photos}
+          value={searchValue}
+          userName={userName}
+          setUserName={setUserName}></PhotoContainer>
       )}
       {!photos?.length && !urlError && <LoaderContainer />}
       <Pagination

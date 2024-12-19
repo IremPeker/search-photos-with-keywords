@@ -1,17 +1,15 @@
 @use "./_variables.scss";
+@use "./_mixins.scss" as mixins;
+
 .pagination-controls {
   margin-top: 20px;
   display: flex;
   justify-content: center;
+  align-items: center;
   padding: 10px;
-}
 
-button {
-  padding: 10px 20px;
-  cursor: pointer;
-}
-
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+  &__previous-button,
+  &__next-button {
+    @include mixins.button-styles();
+  }
 }

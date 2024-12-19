@@ -1,4 +1,5 @@
 @use "./_variables.scss" as vars;
+@use "./_mixins.scss" as mixins;
 @use "./pagination.scss";
 @use "./photoContainer.scss";
 @use "./searchContainer.scss";
@@ -23,35 +24,6 @@ html,
   color: yellow;
   font-family: monospace;
   font-size: 18px;
-
-  &__random-button {
-    position: absolute;
-    top: 65px;
-    left: 115px;
-    border: 0px;
-    font-size: 15px;
-    border-radius: 50px;
-    cursor: pointer;
-    outline: none;
-    padding: 5px 10px;
-    width: 135px;
-    margin: 10px;
-    background: vars.$buttonBg;
-    color: vars.$textColor;
-
-    @media (min-width: vars.$breakpoint-tablet) {
-      top: 11px;
-      left: 380px;
-    }
-
-    &__hover {
-      background-color: vars.$buttonHover;
-    }
-    &__active {
-      box-shadow: 0 5px #666;
-      transform: vars.$buttonTransform;
-    }
-  }
 
   .error-message {
     padding: 25px;

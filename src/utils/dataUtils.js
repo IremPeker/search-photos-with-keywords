@@ -1,9 +1,11 @@
-export const fetchData = async (page, perPage, value) => {
+export const fetchData = async (page, perPage, value, userName) => {
   console.log("I WILL START FETCHING THE DATA VALUE IS", value);
 
   const accessKey = `${process.env.REACT_APP_API_KEY}`;
   const url = value
     ? `https://api.unsplash.com/search/photos?client_id=${accessKey}&page=${page}&per_page=${perPage}&query=${value}`
+    : userName
+    ? `https://api.unsplash.com/users/${userName}/photos?client_id=${accessKey}&page=${page}&per_page=${perPage}`
     : `https://api.unsplash.com/photos/random?count=20&client_id=${accessKey}&page=${page}&per_page=${perPage}`;
 
   try {
