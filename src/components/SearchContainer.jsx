@@ -47,13 +47,14 @@ const SearchContainer = ({
   };
 
   return (
-    <div className="search-container">
+    <div className="search-container" data-testid="search-container">
       <div className="search-container__search-wrapper">
         <div className="search-container__search-wrapper__input-wrapper">
           <label htmlFor="search-input"></label>
           <input
             id="search-input"
             className="search-container__search-wrapper__input-wrapper__search-input"
+            data-testid="search-input"
             type="text"
             minLength={2}
             onChange={handleChange}
@@ -71,6 +72,7 @@ const SearchContainer = ({
         <div className="search-container__search-wrapper__button-wrapper">
           <button
             className="search-container__search-wrapper__button-wrapper__search-button"
+            data-testid="search-button"
             onClick={handleSubmit}>
             Search
           </button>

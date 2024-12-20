@@ -10,6 +10,7 @@ const Pagination = ({
     <div className="pagination-controls">
       <button
         className="pagination-controls__previous-button"
+        data-testid="previous-button"
         onClick={handlePreviousPage}
         disabled={page === 1}>
         Previous
@@ -17,6 +18,7 @@ const Pagination = ({
       <span className="pagination-controls__current-page">Page {page}</span>
       <button
         className="pagination-controls__next-button"
+        data-testid="next-button"
         onClick={handleNextPage}
         disabled={totalPages && page >= totalPages}>
         Next

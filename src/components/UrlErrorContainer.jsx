@@ -3,7 +3,7 @@ import fail from "../images/fail.webp";
 
 const UrlErrorContainer = () => {
   return (
-    <div className="error-container">
+    <div className="error-container" data-testid="error-container">
       <p className="error-container__error-message">
         Something is wrong with the url!
       </p>

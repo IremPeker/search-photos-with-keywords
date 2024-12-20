@@ -33,7 +33,7 @@ const PhotoContainer = ({ allPhotos, handleUserName }) => {
   ));
 
   return (
-    <div>
+    <div data-testid="photo-container">
       <Masonry
         breakpointCols={breakpointColumnsObj}
         className="my-masonry-grid"

@@ -18,9 +18,10 @@ export const fetchData = async (page, perPage, value, userName) => {
 
     // Include total_pages if available, or infer by checking the length of photos
     const totalPages =
-      data.total_pages || (photos.length < perPage ? page : null); // Assuming 10 photos per page
+      data.total_pages || (photos.length < perPage ? page : null);
     return { photos, totalPages };
   } catch (error) {
-    console.error("Error during fetch:", error);
+    throw new Error("Network response was not ok", error);
+    //console.error("Error during fetch:", error);
   }
 };
