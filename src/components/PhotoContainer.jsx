@@ -1,7 +1,13 @@
 import React from "react";
 import Masonry from "react-masonry-css";
+import { capitalizeFirstLetter } from "../utils/stringUtils";
 
-const PhotoContainer = ({ allPhotos, handleUserName }) => {
+const PhotoContainer = ({
+  allPhotos,
+  userName,
+  searchValue,
+  handleUserName,
+}) => {
   const breakpointColumnsObj = {
     default: 4, // 4 columns for default screen size
     1100: 3, // 3 columns for screen widths <= 1100px
@@ -17,11 +23,11 @@ const PhotoContainer = ({ allPhotos, handleUserName }) => {
           className="photo-wrapper__photo-credit__username"
           onClick={() => handleUserName(el.user.username)}
           title="Click if you want to see more photos from this user">
-          {el.user.username}
+          `{el.user.first_name} {el.user.last_name}`
         </a>
       </p>
       <p className="photo-wrapper__photo-description">
-        {el.description ?? el.alt_description}
+        {capitalizeFirstLetter(el.description ?? el.alt_description)}
       </p>
       <img
         className="photo-wrapper__photo-img"
@@ -34,6 +40,13 @@ const PhotoContainer = ({ allPhotos, handleUserName }) => {
 
   return (
     <div data-testid="photo-container">
+      <h2 className="photo-container__header">
+        {userName
+          ? `Photos from selected user`
+          : searchValue
+          ? `Photos with keyword "${searchValue}"`
+          : "Random Photos from Unsplash"}
+      </h2>
       <Masonry
         breakpointCols={breakpointColumnsObj}
         className="my-masonry-grid"

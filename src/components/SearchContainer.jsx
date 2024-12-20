@@ -59,6 +59,7 @@ const SearchContainer = ({
             minLength={2}
             onChange={handleChange}
             value={inputValue}
+            onKeyDown={(e) => e.key === "Enter" && handleSubmit(e)}
           />
           {inputValue && (
             <button

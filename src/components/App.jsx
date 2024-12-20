@@ -83,8 +83,7 @@ const App = () => {
         setPhotos={setPhotos}
         searchValue={searchValue}
         userName={userName}
-        handleUserName={handleUserName}
-        page={page}></SearchContainer>
+        handleUserName={handleUserName}></SearchContainer>
 
       {searchError ? (
         <ErrorContainer />
@@ -94,8 +93,8 @@ const App = () => {
         <>
           <PhotoContainer
             allPhotos={photos}
-            value={searchValue}
             userName={userName}
+            searchValue={searchValue}
             handleUserName={handleUserName}></PhotoContainer>
           <Pagination
             page={page}

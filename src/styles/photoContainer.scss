@@ -1,4 +1,11 @@
 @use "./_variables.scss" as vars;
+@use "./_mixins.scss" as mixins;
+
+.photo-container {
+  &__header {
+    padding: 0 20px;
+  }
+}
 
 .my-masonry-grid {
   width: auto;
@@ -6,11 +13,10 @@
   display: -ms-flexbox;
   display: flex;
   flex-direction: column;
-  margin: 0 25px;
+  padding: 0 20px;
 
   @media (max-width: vars.$breakpointTablet) {
     margin-left: unset;
-    margin-top: 40px;
   }
 
   @media (min-width: vars.$breakpointMobile) {
@@ -24,16 +30,17 @@
     align-items: center;
     background-clip: padding-box;
 
-    @media (max-width: vars.$breakpointTablet) {
-      padding-left: 30px;
-    }
     .photo-wrapper {
       &__photo-credit,
       &__photo-description,
       &__photo-img {
-        width: 240px;
+        max-width: 100%;
+        height: auto;
         border-radius: 15px;
-        // margin: 0 8px 8px 0;
+
+        @media (min-width: vars.$breakpointTablet) {
+          width: 240px;
+        }
       }
 
       &__photo-credit {
@@ -46,6 +53,10 @@
             cursor: pointer;
           }
         }
+      }
+
+      &__photo-description {
+        font-style: italic;
       }
     }
   }

@@ -1,6 +1,6 @@
 @use "_variables.scss" as vars;
 @use "_mixins.scss" as mixins;
-@use "pagination.scss";
+@use "paginationContainer.scss";
 @use "photoContainer.scss";
 @use "searchContainer.scss";
 @use "loaderContainer.scss";
@@ -17,6 +17,7 @@ html,
   width: 100%;
   height: 100%;
   margin: 0;
+  overflow-x: hidden;
 }
 
 .App {

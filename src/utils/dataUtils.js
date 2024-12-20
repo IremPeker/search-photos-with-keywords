@@ -22,6 +22,5 @@ export const fetchData = async (page, perPage, value, userName) => {
     return { photos, totalPages };
   } catch (error) {
     throw new Error("Network response was not ok", error);
-    //console.error("Error during fetch:", error);
   }
 };
