@@ -38,6 +38,7 @@ const App = () => {
       });
     setLoading(false);
   }, [photos?.length, page, perPage, searchValue, userName]);
+
   const updateSearchParams = (newParams) => {
     const params = {
       ...Object.fromEntries(searchParams.entries()),
@@ -77,35 +78,37 @@ const App = () => {
   };
 
   return (
-    <div className="App">
-      <SearchContainer
-        handleSearch={handleSearch}
-        setPhotos={setPhotos}
-        searchValue={searchValue}
-        userName={userName}
-        handleUserName={handleUserName}></SearchContainer>
+    <>
+      <div className="App">
+        <SearchContainer
+          handleSearch={handleSearch}
+          setPhotos={setPhotos}
+          searchValue={searchValue}
+          userName={userName}
+          handleUserName={handleUserName}></SearchContainer>
 
-      {searchError ? (
-        <ErrorContainer />
-      ) : urlError ? (
-        <UrlErrorContainer />
-      ) : (
-        <>
-          <PhotoContainer
-            allPhotos={photos}
-            userName={userName}
-            searchValue={searchValue}
-            handleUserName={handleUserName}></PhotoContainer>
-          <Pagination
-            page={page}
-            totalPages={totalPages}
-            handleNextPage={handleNextPage}
-            handlePreviousPage={handlePreviousPage}></Pagination>
-          <ScrollToTopButton />
-        </>
-      )}
-      {loading && <LoaderContainer />}
-    </div>
+        {searchError ? (
+          <ErrorContainer />
+        ) : urlError ? (
+          <UrlErrorContainer />
+        ) : (
+          <>
+            <PhotoContainer
+              allPhotos={photos}
+              userName={userName}
+              searchValue={searchValue}
+              handleUserName={handleUserName}></PhotoContainer>
+            <Pagination
+              page={page}
+              totalPages={totalPages}
+              handleNextPage={handleNextPage}
+              handlePreviousPage={handlePreviousPage}></Pagination>
+          </>
+        )}
+        {loading && <LoaderContainer />}
+      </div>
+      <ScrollToTopButton />
+    </>
   );
 };
 

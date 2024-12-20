@@ -5,7 +5,7 @@
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: #007bff;
+  background-color: vars.$scrollToTopButtonBg;
   color: white;
   border: none;
   border-radius: 50%;
@@ -28,5 +28,5 @@
 }
 
 .scroll-to-top:hover {
-  background-color: #0056b3;
+  background-color: #aaaa72;
 }

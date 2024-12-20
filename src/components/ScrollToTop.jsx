@@ -3,6 +3,15 @@ import React, { useState, useEffect } from "react";
 const ScrollToTopButton = () => {
   const [isVisible, setIsVisible] = useState(false);
 
+  useEffect(() => {
+    console.log("scroll to top use effect.");
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   const handleScroll = () => {
     if (window.scrollY > 300) {
       setIsVisible(true);
@@ -17,13 +26,6 @@ const ScrollToTopButton = () => {
       behavior: "smooth",
     });
   };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   return (
     <button
