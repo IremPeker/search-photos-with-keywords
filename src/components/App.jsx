@@ -15,6 +15,7 @@ const App = () => {
   const [searchError, setSearchError] = useState(false);
   const [urlError, setUrlError] = useState(false);
   const [totalPages, setTotalPages] = useState(0);
+  const [loading, setLoading] = useState(true);
   const page = Number(searchParams.get("page")) || 1; // Default to page 1
   const searchValue = searchParams.get("search") || "";
   const userName = searchParams.get("userName") || "";
@@ -24,9 +25,10 @@ const App = () => {
     fetchData(page, perPage, searchValue, userName)
       .then((data) => {
         const { photos, totalPages } = data;
-        if (data.length === 0) {
+        if (photos.length === 0) {
           setSearchError(true);
         } else {
+          setSearchError(false);
           setPhotos(photos);
           setTotalPages(totalPages);
         }
@@ -34,6 +36,7 @@ const App = () => {
       .catch((error) => {
         setUrlError(true);
       });
+    setLoading(false);
   }, [photos?.length, page, perPage, searchValue, userName]);
   const updateSearchParams = (newParams) => {
     const params = {
@@ -102,7 +105,7 @@ const App = () => {
           <ScrollToTopButton />
         </>
       )}
-      {!photos?.length && !urlError && !searchError && <LoaderContainer />}
+      {loading && <LoaderContainer />}
     </div>
   );
 };

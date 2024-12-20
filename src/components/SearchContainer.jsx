@@ -47,13 +47,13 @@ const SearchContainer = ({
   };
 
   return (
-    <div className="search">
-      <div className="search__search-wrapper">
-        <div className="search__search-wrapper__input-wrapper">
+    <div className="search-container">
+      <div className="search-container__search-wrapper">
+        <div className="search-container__search-wrapper__input-wrapper">
           <label htmlFor="search-input"></label>
           <input
             id="search-input"
-            className="search__search-wrapper__input-wrapper__search-input"
+            className="search-container__search-wrapper__input-wrapper__search-input"
             type="text"
             minLength={2}
             onChange={handleChange}
@@ -61,22 +61,22 @@ const SearchContainer = ({
           />
           {inputValue && (
             <button
-              className="search__search-wrapper__input-wrapper__clear-button"
+              className="search-container__search-wrapper__input-wrapper__clear-button"
               onClick={handleClear}
               aria-label="Clear input">
               X
             </button>
           )}
         </div>
-        <div className="search__search-wrapper__button-wrapper">
+        <div className="search-container__search-wrapper__button-wrapper">
           <button
-            className="search__search-wrapper__button-wrapper__search-button"
+            className="search-container__search-wrapper__button-wrapper__search-button"
             onClick={handleSubmit}>
             Search
           </button>
           {searchValue || userName ? (
             <button
-              className="search__search-wrapper__button-wrapper__random-button"
+              className="search-container__search-wrapper__button-wrapper__random-button"
               onClick={handleBackToRandomButton}>
               Back To Random Photos
             </button>
@@ -84,7 +84,11 @@ const SearchContainer = ({
         </div>
       </div>
 
-      {warning && <small>Keyword must be at least 3 characters!</small>}
+      {warning && (
+        <small className="search-container__warning">
+          Keyword must be at least 3 characters!
+        </small>
+      )}
     </div>
   );
 };

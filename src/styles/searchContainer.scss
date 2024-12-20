@@ -1,7 +1,7 @@
 @use "./_variables.scss" as vars;
 @use "./_mixins.scss" as mixins;
 
-.search {
+.search-container {
   height: 100px;
   padding: 20px 10px;
 
@@ -38,6 +38,11 @@
         cursor: pointer;
         font-size: 16px;
         color: #888;
+
+        @media (max-width: vars.$breakpointTablet) {
+          right: unset;
+          left: 190px;
+        }
       }
     }
 
@@ -47,10 +52,20 @@
       justify-content: space-between;
       align-items: baseline;
 
+      @media (max-width: vars.$breakpointTablet) {
+        justify-content: flex-start;
+      }
+
       &__search-button,
       &__random-button {
+        margin-top: 10px;
         @include mixins.button-styles();
       }
     }
+  }
+
+  &__warning {
+    color: white;
+    margin-top: 5px;
   }
 }
