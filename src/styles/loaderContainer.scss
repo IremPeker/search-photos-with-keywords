@@ -1,0 +1,10 @@
+@use "./_variables.scss" as vars;
+@use "./_mixins.scss" as mixins;
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+  width: 100vw; /* Full viewport width */
+}

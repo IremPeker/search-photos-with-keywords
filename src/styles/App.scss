@@ -1,8 +1,11 @@
-@use "./_variables.scss" as vars;
-@use "./_mixins.scss" as mixins;
-@use "./pagination.scss";
-@use "./photoContainer.scss";
-@use "./searchContainer.scss";
+@use "_variables.scss" as vars;
+@use "_mixins.scss" as mixins;
+@use "pagination.scss";
+@use "photoContainer.scss";
+@use "searchContainer.scss";
+@use "loaderContainer.scss";
+@use "scrollToTop.scss";
+@use "urlErrorContainer.scss";
 
 * {
   box-sizing: border-box;
@@ -14,22 +17,14 @@ html,
   width: 100%;
   height: 100%;
   margin: 0;
-  background: vars.$mainBg;
 }
 
 .App {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  color: yellow;
+  color: vars.$textColor;
   font-family: monospace;
   font-size: 14px;
-
-  .error-message {
-    padding: 25px;
-  }
-
-  .fail-message {
-    height: 250px;
-    padding-left: 25px;
-  }
+  background-color: vars.$mainBg;
 }

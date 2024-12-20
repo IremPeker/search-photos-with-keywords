@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { fetchData } from "../utils/dataUtils";
-//import Unsplash from "unsplash-js";
 import SearchContainer from "./SearchContainer";
 import PhotoContainer from "./PhotoContainer";
 import ErrorContainer from "./ErrorContainer";
-//import photos from "unsplash-js/lib/methods/photos";
 import UrlErrorContainer from "./UrlErrorContainer";
 import LoaderContainer from "./LoaderContainer";
 import Pagination from "./Pagination";
+import ScrollToTopButton from "./ScrollToTop";
 
 const App = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -89,18 +88,21 @@ const App = () => {
       ) : urlError ? (
         <UrlErrorContainer />
       ) : (
-        <PhotoContainer
-          allPhotos={photos}
-          value={searchValue}
-          userName={userName}
-          handleUserName={handleUserName}></PhotoContainer>
+        <>
+          <PhotoContainer
+            allPhotos={photos}
+            value={searchValue}
+            userName={userName}
+            handleUserName={handleUserName}></PhotoContainer>
+          <Pagination
+            page={page}
+            totalPages={totalPages}
+            handleNextPage={handleNextPage}
+            handlePreviousPage={handlePreviousPage}></Pagination>
+          <ScrollToTopButton />
+        </>
       )}
       {!photos?.length && !urlError && !searchError && <LoaderContainer />}
-      <Pagination
-        page={page}
-        totalPages={totalPages}
-        handleNextPage={handleNextPage}
-        handlePreviousPage={handlePreviousPage}></Pagination>
     </div>
   );
 };
