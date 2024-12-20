@@ -1,26 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 
 const SearchContainer = ({
-  setSearchValue,
+  handleSearch,
   setPhotos,
   searchValue,
   userName,
-  setUserName,
+  handleUserName,
 }) => {
   const [warning, setWarning] = React.useState(false);
+  const [inputValue, setInputValue] = useState(searchValue ?? "");
 
   const handleChange = (e) => {
-    setSearchValue(e.target.value);
+    e.preventDefault();
+    setInputValue(e.target.value);
     setWarning(false);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (searchValue.length > 2) {
+    if (inputValue.length > 2) {
       setPhotos([]);
+      handleSearch(inputValue.trim());
     } else {
       setWarning(true);
     }
+  };
+
+  const handleBackToRandomButton = () => {
+    setInputValue("");
+    handleUserName("");
+    setWarning(false);
+    handleSearch("");
   };
 
   return (
@@ -33,7 +43,7 @@ const SearchContainer = ({
           type="text"
           minLength={2}
           onChange={handleChange}
-          value={searchValue}
+          value={inputValue}
         />
         <div className="search__search-wrapper__button-wrapper">
           <button
@@ -41,17 +51,13 @@ const SearchContainer = ({
             onClick={handleSubmit}>
             Search
           </button>
-          {searchValue ||
-            (userName && (
-              <button
-                className="search__search-wrapper__button-wrapper__random-button"
-                onClick={() => {
-                  setSearchValue("");
-                  setUserName(null);
-                }}>
-                Back To Random Photos
-              </button>
-            ))}
+          {searchValue || userName ? (
+            <button
+              className="search__search-wrapper__button-wrapper__random-button"
+              onClick={handleBackToRandomButton}>
+              Back To Random Photos
+            </button>
+          ) : null}
         </div>
       </div>
 

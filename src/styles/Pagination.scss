@@ -1,4 +1,4 @@
-@use "./_variables.scss";
+@use "./_variables.scss" as vars;
 @use "./_mixins.scss" as mixins;
 
 .pagination-controls {
@@ -11,5 +11,13 @@
   &__previous-button,
   &__next-button {
     @include mixins.button-styles();
+  }
+
+  &__current-page {
+    margin-top: 8px;
+
+    @media (min-width: vars.$breakpointTablet) {
+      margin-top: unset;
+    }
   }
 }

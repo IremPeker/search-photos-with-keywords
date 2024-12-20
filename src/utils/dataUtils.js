@@ -1,5 +1,5 @@
 export const fetchData = async (page, perPage, value, userName) => {
-  console.log("I WILL START FETCHING THE DATA VALUE IS", value);
+  console.log("inside fetch data, username is", userName);
 
   const accessKey = `${process.env.REACT_APP_API_KEY}`;
   const url = value
@@ -17,8 +17,6 @@ export const fetchData = async (page, perPage, value, userName) => {
     const data = await response.json();
 
     const photos = data.results || data;
-    console.log("data is: ", photos);
-
     return photos;
   } catch (error) {
     console.error("Error during fetch:", error);

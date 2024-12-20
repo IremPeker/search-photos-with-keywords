@@ -41,7 +41,7 @@ See the section about [npm run eject](https://create-react-app.dev/docs/availabl
 
 ## How to use?
 
-After you start the project in localhost, you will see 20 random photos from Unsplash API. You can change the page by using the paginator below. You can also use search input to search photos with keywords.
+After you start the project in localhost, you will see 20 random photos from Unsplash. You can change the page by using the paginator at the bottom of the page. You can also use search input to search photos with keywords. When you click on the name of the photo owner, you will see more photos of this person.
 
 ## Made by
 

@@ -9,7 +9,7 @@ const Pagination = ({ page, handleNextPage, handlePreviousPage }) => {
         disabled={page === 1}>
         Previous
       </button>
-      <span>Page {page}</span>
+      <span className="pagination-controls__current-page">Page {page}</span>
       <button
         className="pagination-controls__next-button"
         onClick={handleNextPage}>

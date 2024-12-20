@@ -6,24 +6,18 @@
   display: -ms-flexbox;
   display: flex;
   flex-direction: column;
-  //margin-left: -30px; /* gutter size offset */
   margin: 0 25px;
 
   @media (max-width: vars.$breakpointTablet) {
     margin-left: unset;
-    margin-top: 20px;
+    margin-top: 40px;
   }
 
   @media (min-width: vars.$breakpointMobile) {
     flex-direction: row;
   }
 
-  // @media (max-width: vars.$breakpointTablet) {
-  //   margin-left: -15px;
-  // }
-
   .my-masonry-grid_column {
-    //padding-left: 30px; /* gutter size */
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -31,15 +25,15 @@
     background-clip: padding-box;
 
     @media (max-width: vars.$breakpointTablet) {
-      padding-left: 50px;
+      padding-left: 30px;
     }
     .photo-wrapper {
       &__photo-credit,
       &__photo-description,
       &__photo-img {
-        width: 300px;
+        width: 240px;
         border-radius: 15px;
-        margin: 0 8px 8px 0;
+        // margin: 0 8px 8px 0;
       }
 
       &__photo-credit {
@@ -55,13 +49,4 @@
       }
     }
   }
-
-  // .my-masonry-grid_column > div {
-  //   /* change div to reference your elements you put in <Masonry> */
-  //   margin: 0 0 30px 15px;
-
-  //   @media (max-width: vars.$breakpointTablet) {
-  //     margin-bottom: 15px;
-  //   }
-  // }
 }

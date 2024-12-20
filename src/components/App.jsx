@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { fetchData } from "../utils/dataUtils";
 //import Unsplash from "unsplash-js";
 import SearchContainer from "./SearchContainer";
@@ -10,17 +11,16 @@ import LoaderContainer from "./LoaderContainer";
 import Pagination from "./Pagination";
 
 const App = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [photos, setPhotos] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
   const [searchError, setSearchError] = useState(false);
   const [urlError, setUrlError] = useState(false);
-  const [page, setPage] = useState(1);
-  const [userName, setUserName] = useState(null);
+  const page = Number(searchParams.get("page")) || 1; // Default to page 1
+  const searchValue = searchParams.get("search") || "";
+  const userName = searchParams.get("userName") || "";
   const perPage = 20;
 
   useEffect(() => {
-    console.log("inside use effect, user name is changed");
-
     fetchData(page, perPage, searchValue, userName)
       .then((data) => {
         if (data.length === 0) {
@@ -33,25 +33,52 @@ const App = () => {
         setUrlError(true);
       });
   }, [photos?.length, page, perPage, searchValue, urlError, userName]);
+  const updateSearchParams = (newParams) => {
+    const params = {
+      ...Object.fromEntries(searchParams.entries()),
+      ...newParams,
+    };
+    // Remove keys with empty values
+    Object.keys(params).forEach((key) => {
+      if (!params[key]) {
+        delete params[key];
+      }
+    });
+    setSearchParams(params);
+  };
 
-  const handleNextPage = () => setPage((prevPage) => prevPage + 1);
-  const handlePreviousPage = () =>
-    setPage((prevPage) => Math.max(prevPage - 1, 1));
+  const handleNextPage = () => {
+    updateSearchParams({
+      userName: userName ?? "",
+      search: searchValue ?? "",
+      page: page + 1,
+    });
+  };
 
-  // const handleUserClick = async (username) => {
-  //   const userPhotos = await fetchUserPhotos(page, perPage, searchValue, username);
-  //   setPhotos(userPhotos);
-  //   //setSelectedUser(username);
-  // };
+  const handlePreviousPage = () => {
+    updateSearchParams({
+      userName: userName ?? "",
+      search: searchValue ?? "",
+      page: Math.max(page - 1, 1),
+    });
+  };
+
+  const handleSearch = (newSearchValue) => {
+    updateSearchParams({ search: newSearchValue, userName: "", page: 1 });
+  };
+
+  const handleUserName = (newUserName) => {
+    updateSearchParams({ userName: newUserName, search: "", page: 1 });
+  };
 
   return (
     <div className="App">
       <SearchContainer
-        setSearchValue={setSearchValue}
+        handleSearch={handleSearch}
         setPhotos={setPhotos}
         searchValue={searchValue}
         userName={userName}
-        setUserName={setUserName}
+        handleUserName={handleUserName}
         page={page}></SearchContainer>
 
       {searchError ? (
@@ -63,7 +90,7 @@ const App = () => {
           allPhotos={photos}
           value={searchValue}
           userName={userName}
-          setUserName={setUserName}></PhotoContainer>
+          handleUserName={handleUserName}></PhotoContainer>
       )}
       {!photos?.length && !urlError && <LoaderContainer />}
       <Pagination

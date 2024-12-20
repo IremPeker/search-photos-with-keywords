@@ -20,10 +20,9 @@ html,
 .App {
   display: flex;
   flex-direction: column;
-  align-items: normal;
   color: yellow;
   font-family: monospace;
-  font-size: 18px;
+  font-size: 14px;
 
   .error-message {
     padding: 25px;

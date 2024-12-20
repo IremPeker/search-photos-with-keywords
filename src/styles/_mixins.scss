@@ -3,17 +3,16 @@
 @mixin button-styles() {
   margin-top: 10px;
   border: 0;
-  font-size: 20px;
+  // font-size: 20px;
   border-radius: 50px;
-  padding: 10px 20px;
+  padding: 5px 15px;
   cursor: pointer;
   outline: none;
-  background: vars.$mainBg;
+  background: vars.$buttonBg;
   color: vars.$textColor;
 
   @media (min-width: vars.$breakpointTablet) {
-    margin-top: 0;
-    margin-left: 10px;
+    margin: 0 10px;
   }
 
   &:hover {
