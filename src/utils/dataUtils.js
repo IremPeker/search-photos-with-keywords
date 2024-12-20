@@ -1,6 +1,4 @@
 export const fetchData = async (page, perPage, value, userName) => {
-  console.log("inside fetch data, username is", userName);
-
   const accessKey = `${process.env.REACT_APP_API_KEY}`;
   const url = value
     ? `https://api.unsplash.com/search/photos?client_id=${accessKey}&page=${page}&per_page=${perPage}&query=${value}`
@@ -17,7 +15,11 @@ export const fetchData = async (page, perPage, value, userName) => {
     const data = await response.json();
 
     const photos = data.results || data;
-    return photos;
+
+    // Include total_pages if available, or infer by checking the length of photos
+    const totalPages =
+      data.total_pages || (photos.length < perPage ? page : null); // Assuming 10 photos per page
+    return { photos, totalPages };
   } catch (error) {
     console.error("Error during fetch:", error);
   }

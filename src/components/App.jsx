@@ -15,6 +15,7 @@ const App = () => {
   const [photos, setPhotos] = useState([]);
   const [searchError, setSearchError] = useState(false);
   const [urlError, setUrlError] = useState(false);
+  const [totalPages, setTotalPages] = useState(0);
   const page = Number(searchParams.get("page")) || 1; // Default to page 1
   const searchValue = searchParams.get("search") || "";
   const userName = searchParams.get("userName") || "";
@@ -23,16 +24,18 @@ const App = () => {
   useEffect(() => {
     fetchData(page, perPage, searchValue, userName)
       .then((data) => {
+        const { photos, totalPages } = data;
         if (data.length === 0) {
           setSearchError(true);
         } else {
-          setPhotos(data);
+          setPhotos(photos);
+          setTotalPages(totalPages);
         }
       })
       .catch((error) => {
         setUrlError(true);
       });
-  }, [photos?.length, page, perPage, searchValue, urlError, userName]);
+  }, [photos?.length, page, perPage, searchValue, userName]);
   const updateSearchParams = (newParams) => {
     const params = {
       ...Object.fromEntries(searchParams.entries()),
@@ -92,9 +95,10 @@ const App = () => {
           userName={userName}
           handleUserName={handleUserName}></PhotoContainer>
       )}
-      {!photos?.length && !urlError && <LoaderContainer />}
+      {!photos?.length && !urlError && !searchError && <LoaderContainer />}
       <Pagination
         page={page}
+        totalPages={totalPages}
         handleNextPage={handleNextPage}
         handlePreviousPage={handlePreviousPage}></Pagination>
     </div>

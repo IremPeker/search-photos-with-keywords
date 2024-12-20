@@ -1,6 +1,11 @@
 import React from "react";
 
-const Pagination = ({ page, handleNextPage, handlePreviousPage }) => {
+const Pagination = ({
+  page,
+  totalPages,
+  handleNextPage,
+  handlePreviousPage,
+}) => {
   return (
     <div className="pagination-controls">
       <button
@@ -12,7 +17,8 @@ const Pagination = ({ page, handleNextPage, handlePreviousPage }) => {
       <span className="pagination-controls__current-page">Page {page}</span>
       <button
         className="pagination-controls__next-button"
-        onClick={handleNextPage}>
+        onClick={handleNextPage}
+        disabled={totalPages && page >= totalPages}>
         Next
       </button>
     </div>

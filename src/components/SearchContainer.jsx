@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const SearchContainer = ({
   handleSearch,
@@ -9,6 +9,13 @@ const SearchContainer = ({
 }) => {
   const [warning, setWarning] = React.useState(false);
   const [inputValue, setInputValue] = useState(searchValue ?? "");
+
+  useEffect(() => {
+    if (warning) {
+      const timer = setTimeout(() => setWarning(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [warning]);
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -33,18 +40,34 @@ const SearchContainer = ({
     handleSearch("");
   };
 
+  const handleClear = () => {
+    setInputValue("");
+    handleSearch("");
+    setWarning(false);
+  };
+
   return (
     <div className="search">
       <div className="search__search-wrapper">
-        <label htmlFor="search-input"></label>
-        <input
-          id="search-input"
-          className="search__search-wrapper__search-input"
-          type="text"
-          minLength={2}
-          onChange={handleChange}
-          value={inputValue}
-        />
+        <div className="search__search-wrapper__input-wrapper">
+          <label htmlFor="search-input"></label>
+          <input
+            id="search-input"
+            className="search__search-wrapper__input-wrapper__search-input"
+            type="text"
+            minLength={2}
+            onChange={handleChange}
+            value={inputValue}
+          />
+          {inputValue && (
+            <button
+              className="search__search-wrapper__input-wrapper__clear-button"
+              onClick={handleClear}
+              aria-label="Clear input">
+              X
+            </button>
+          )}
+        </div>
         <div className="search__search-wrapper__button-wrapper">
           <button
             className="search__search-wrapper__button-wrapper__search-button"
